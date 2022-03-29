@@ -24,6 +24,11 @@ int main() {
     cerr << "Não foi possível vincular ao IP/port";
     return -2;
   }
+  // mark the socket for listening in
+  if (listen(listening, SOMAXCONN) == -1) {
+    cerr << "Não foi possível receber a conexão";
+    return -3;
+  }
   
   return 0;
 }
