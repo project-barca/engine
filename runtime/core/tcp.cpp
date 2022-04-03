@@ -19,16 +19,23 @@ int main() {
   //   - SOCK_SEQPACKET (Reliable Sequenced Packet Service)
   //   - SOCK_RAW (raw protocols on top of the network layer)
   // 3_protocol:
-  //  IPPROTO_TCP this protocol is connection-oriented and a connection between client and server is established before data can be sent.
-  //  IPPROTO_UDP this protocol allows very fast communication but low reliability
-  //  IPPROTO_SCTP unlike UDP and TCP, the protocol supports multihoming and redundant paths to increase resilience and reliability.
-  //  IPPROTO_DCCP is a new transport layer protocol that implements bidirectional unicast connections, unreliable congestion control of datagrams.
+  //   - IPPROTO_TCP this protocol is connection-oriented and a connection between client and server is established before data can be sent.
+  //   - IPPROTO_UDP this protocol allows very fast communication but low reliability
+  //   - IPPROTO_SCTP unlike UDP and TCP, the protocol supports multihoming and redundant paths to increase resilience and reliability.
+  //   - IPPROTO_DCCP is a new transport layer protocol that implements bidirectional unicast connections, unreliable congestion control of datagrams.
   int listening = socket(AF_INET, SOCK_STREAM, 0);
   // check if socket was created successfully
   if (listening == -1) {
     cerr << "Não foi possível criar um socket";
   }
-  // bind the socket to a IP/PORT
+  // when a socket is created with socket(domain, type, protocol), it only receives a porthole family, but not an assigned address.
+  //
+  // the bind(sockfd, my_addr, addrien) function takes three arguments:
+  //   - sockfd, a descriptor representing the socket.
+  //   - my_addr, a pointer to a sockaddr structure representing the address to bind to.
+  //   - addrien, a field of type socklen_t specifying the size of the sockaddr structure.
+  //
+  // bind() returns 0 on success and -1 if an error occurs.
   sockaddr_in hint;
   hint.sin_family = AF_INET;
   //assign hosts for small networks
