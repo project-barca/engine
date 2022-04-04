@@ -27,6 +27,7 @@ int main() {
   // check if socket was created successfully
   if (listening == -1) {
     cerr << "Não foi possível criar um socket";
+    return -1;
   }
   // when a socket is created with socket(domain, type, protocol), it only receives a porthole family, but not an assigned address.
   //
@@ -38,7 +39,7 @@ int main() {
   // bind() returns 0 on success and -1 if an error occurs.
   sockaddr_in hint;
   hint.sin_family = AF_INET;
-  //assign hosts for small networks
+  // assign hosts for small networks
   hint.sin_port = htons(54000);
   // set version 4 network address with any available ip to a link
   inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
@@ -47,7 +48,14 @@ int main() {
     cerr << "Não foi possível vincular ao IP/port";
     return -2;
   }
-  // mark the socket for listening in
+  // after a socket has been associated with an address, listen() prepares it for
+  // incoming connections. However, this is only necessary for the stream-oriented (connection-oriented) data modes, i.e.
+  // for socket types (SOCK_STREAM, SOCK_SEQPACKET).
+  //
+  // the listen(sockfd, backlog) function takes two arguments:
+  //  - sockfd, a valid socket descriptor.
+  //  - backlog, an integer representing the number of pending connections that can be queued up at any one time.
+  //    The operating system usually places a cap on this value.
   if (listen(listening, SOMAXCONN) == -1) {
     cerr << "Não foi possível receber a conexão";
     return -3;
