@@ -44,7 +44,7 @@ int main() {
   // set version 4 network address with any available ip to a link
   inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
   // check if the info link is bound to the socket
-  if (bind(listening, AF_INET, (sockaddr*)&hint, sizeof(hint)) == -1) {
+  if (bind(listening, (sockaddr*)&hint, sizeof(hint)) == -1) {
     cerr << "Não foi possível vincular ao IP/port";
     return -2;
   }
@@ -92,7 +92,7 @@ int main() {
   int result = getnameinfo((sockaddr*)&client, sizeof(client), host, NI_MAXHOST, svc, NI_MAXSERV, 0);
 
   if (result) {
-    cout << host << " conectado em " << service << endl;
+    cout << host << " conectado em " << svc << endl;
   } else {
     inet_ntop(AF_INET, &client.sin_addr, host, NI_MAXHOST);
     cout << host << " conectado em " << ntohs(client.sin_port) << endl;
@@ -116,7 +116,9 @@ int main() {
     }
     // display data stream that customer sent
     cout << "barca-client:  " << string(buf, 0, bytesRecv) << endl;
+    // return to client bytes received
+    send(clientSocket, buf, bytesRecv +1, 0);
   }
-
+  close(clientSocket);
   return 0;
 }
