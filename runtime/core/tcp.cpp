@@ -65,7 +65,17 @@ int main() {
   socklen_t clientSize = sizeof(client);
   char host[NI_MAXHOST];
   char svc[NI_MAXSERV];
-
+  // the function accept() creates a new socket for each connection and removes the connection from the listening queue. 
+  //
+  // the accept(sockfd, cliaddr, addrlen) function takes three arguments:
+  //  - sockfd, the descriptor of the listening socket that has the connection queued.
+  //  - cliaddr, a pointer to a sockaddr structure to receive the client's address information.
+  //  - addrlen, a pointer to a socklen_t location that specifies the size of the client address structure passed to accept(). 
+  //    When accept() returns, this location contains the size (in bytes) of the structure.
+  //
+  // obs: accept() returns the new socket descriptor for the accepted connection, or the value -1 if an error occurs. 
+  //      All further communication with the remote host now occurs via this new socket.
+  //
   int clientSocket = accept(listening, (sockaddr*)&client, &clientSize)
 
   return 0;
