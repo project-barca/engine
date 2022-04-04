@@ -76,7 +76,47 @@ int main() {
   // obs: accept() returns the new socket descriptor for the accepted connection, or the value -1 if an error occurs. 
   //      All further communication with the remote host now occurs via this new socket.
   //
-  int clientSocket = accept(listening, (sockaddr*)&client, &clientSize)
+  int clientSocket = accept(listening, (sockaddr*)&client, &clientSize);
+  // check if client socket is in error
+  if (clientSocket == -1) {
+    cerr << "Error Socket Client!";
+    return -4;
+  }
+  close(listening);
+  // clear the buffer to hosts
+  memset(host, 0, NI_MAXHOST);
+  memset(svc, 0, NI_MAXSERV);
+  // the getnameinfo() function translates a socket address to a node name and service location. 
+  // The function looks up an IP address and port number provided by the caller in 
+  // the DNS and system-specific database, and returns text strings for both in buffers provided by the caller.
+  int result = getnameinfo((sockaddr*)&client, sizeof(client), host, NI_MAXHOST, svc, NI_MAXSERV, 0);
+
+  if (result) {
+    cout << host << " conectado em " << service << endl;
+  } else {
+    inet_ntop(AF_INET, &client.sin_addr, host, NI_MAXHOST);
+    cout << host << " conectado em " << ntohs(client.sin_port) << endl;
+  }
+  // while receiving display message, echo message
+  char buf[4096];
+  while (true) {
+    // clear the buffer
+    memset(buf, 0, 4096);
+    // wait for a message client
+    int bytesRecv = recv(clientSocket, buf, 4096, 0);
+    // check if bytes received is in error
+    if (bytesRecv == -1) {
+      cerr << "Houve um problema de conexão" << endl;
+      break;
+    }
+    // check if the client has disconnected
+    if (bytesRecv == 0) {
+      cout << "O cliente se desconectou" << endl;
+      break;
+    }
+    // display data stream that customer sent
+    cout << "barca-client:  " << string(buf, 0, bytesRecv) << endl;
+  }
 
   return 0;
 }
