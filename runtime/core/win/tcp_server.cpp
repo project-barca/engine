@@ -25,4 +25,11 @@ void main() {
     cerr << "Não foi possível criar o socket" << WSAGetLastError() << endl;
     return;
   }
+  // hint structure
+  sockaddr_in hint;
+  hint.sin_family == AF_INET;
+  hint.sin_port = htons(port);
+  inet_pton(AF_INET, ipAddress.c_str(), &hint.sin_addr);
+
+
 }
