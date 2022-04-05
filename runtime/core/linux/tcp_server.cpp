@@ -3,6 +3,10 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <string>
+#include <sys/types.h>
+#include <iostream>
+#include <unistd.h>
+#include <sys/socket.h>
 
 using namespace std;
 int main() {
