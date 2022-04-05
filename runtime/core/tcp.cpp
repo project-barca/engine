@@ -1,5 +1,7 @@
 //For Windows
-#ifdef _WIN32
+// #ifdef _WIN32
+// #ifdef _WIN64
+#ifdef OS_WINDOWS
 int betriebssystem = 1;
 #include <winsock2.h>
 #include <ws2tcpip.h>
