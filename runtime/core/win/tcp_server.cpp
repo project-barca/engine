@@ -27,5 +27,25 @@ void main() {
   hint.sin_addr.S_un.S_addr = INADDR_ANY;
 
   bind(listening, (sockaddr*)&hint, sizeof(hint));
-
+  listen(listening, SOMAXCONN);
+  // wait for a connection
+  sockaddr_in client;
+  int clientSize = sizeof(client);
+  SOCKET clientSocket = accept(listening, (sockaddr*)&client, &clientSize);
+  // client's remote name
+  char host[NI_MAXHOST];
+  // service (i.e. port) the client is connect on
+  char service[NI_MAXHOST];
+  // clear the buffer
+  ZeroMemory(host, NI_MAXHOST);
+  ZeroMemory(service, NI_MAXHOST);
+  
+  if (getnameinfo((sockaddr*)&client, sizeof(client), host, NI_MAXHOST, service, NI_MAXSERV, 0) == 0){
+    cout << host << " connected on port " << service << endl;
+  }else{
+    inet_ntop(AF_INET, &client.sin_addr, host, NI_MAXHOST);
+    cout << host << " conected on port " << ntohs(client.sin_port) << endl;
+  }
+  // close listening socket
+  closesocket(listening);
 }
