@@ -5,12 +5,12 @@
 
 using namespace std;
 
-void main() {
+int main() {
   // initialize WinSock
   WSADATA wsData;
   WORD vr = MAKEWORD(2, 2);
 
-  int WSOK = WSAStartup(vr, &WSData);
+  int WSOK = WSAStartup(vr, &wsData);
   if (WSOK != 0) {
     cerr << "Não foi possível inicializar o Winsock" << endl;
   }
@@ -18,7 +18,7 @@ void main() {
   SOCKET listening = socket(AF_INET, SOCK_STREAM, 0);
   if (listening == INVALID_SOCKET) {
     cerr << "Não foi possível criar um socket" << endl;
-    return;
+    return -1;
   }
   // bind the ip address and port to a socket
   sockaddr_in hint;
