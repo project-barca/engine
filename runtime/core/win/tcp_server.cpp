@@ -60,11 +60,9 @@ void main() {
           cout << "server> " << string(buf, 0, bytesReceived) << endl;
         }
       }
-
     }
-
   } while (userInput.size() > 0);
-
-
-
+  // close down everything
+  closesocket(sock);
+  WSACleanup();
 }
