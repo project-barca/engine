@@ -65,4 +65,8 @@ void main() {
     // echo message back to client
     send(clientSocket, buf, bytesReceived + 1, 0);
   }
+  // close the socket
+  closesocket(clientSocket);
+  // cleanup winsock
+  WSACleanup();
 }
