@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void main() {
+int main() {
   // IP Address of the server
   string ipAddr = "127.0.0.1";
   // listening port on the server  
@@ -16,7 +16,7 @@ void main() {
   int wsResult = WSAStartup(vr, &data);
   if (wsResult != 0) {
     cerr << "Não foi possível iniciar o Winsock" << wsResult << endl;
-    return;
+    return -1;
   }
   // create a socket
   SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -24,20 +24,20 @@ void main() {
   if (sock == INVALID_SOCKET) {
     cerr << "Não foi possível criar o socket" << WSAGetLastError() << endl;
     WSACleanup();
-    return;
+    return -1;
   }
   // hint structure
   sockaddr_in hint;
   hint.sin_family == AF_INET;
   hint.sin_port = htons(port);
-  inet_pton(AF_INET, ipAddress.c_str(), &hint.sin_addr);
+  inet_pton(AF_INET, ipAddr.c_str(), &hint.sin_addr);
   // connect to server
   int connRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
-  if (connResult == SOCKET_ERROR) {
+  if (connRes == SOCKET_ERROR) {
     cerr << "Não foi possível conectar ao servidor" << WSAGetLastError() << endl;
     closesocket(sock);
     WSACleanup();
-    return;
+    return -1;
   }
   // while loop to send and receive data
   char buf[4096];
