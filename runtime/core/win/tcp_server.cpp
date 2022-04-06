@@ -48,4 +48,21 @@ void main() {
   }
   // close listening socket
   closesocket(listening);
+  // loop for accept connection and resend message back to client
+  char buf[4096];
+  while (true) {
+    ZeroMemory(buf, 4096);
+    // wait for client to send data
+    int bytesReceived = recv(clientSocket, buf, 4096, 0);
+    if (bytesReceived == SOCKET_ERROR) {
+      cerr << "Error recv()" << endl;
+      break;
+    }
+    if (bytesReceived == 0) {
+      cout << "Cliente desconectado" << endl;
+      break;
+    }
+    // echo message back to client
+    send(clientSocket, buf, bytesReceived + 1, 0);
+  }
 }
