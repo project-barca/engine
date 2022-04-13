@@ -16,7 +16,7 @@ int main() {
     return -1;
   }
   // create a hint structure for the server we're connecting with
-  int port = 5400;
+  int port = 54000;
   string ipAddr = "127.0.0.1";
 
   sockaddr_in hint;
