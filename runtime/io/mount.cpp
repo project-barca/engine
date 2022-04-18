@@ -4,13 +4,40 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include <dirent.h>
+#include <dir.h>
 
 using namespace std;
 
 FILE *file;
 
 void mountDirEngine() {
-  // specifying paths
+  char bwcAdd[256];
+  // take the value of the userprofile variable and store it in the env array
+  GetEnvironmentVariable("userprofile", bwcAdd, sizeof(bwcAdd));
+  // concatenates
+  strcat(bwcAdd,"\\.bwc");
+  // create Barca Web Cloud directory
+  mkdir(bwcAdd);
+  std::string pathsBWC[10] = {
+    strcat(bwcAdd,"\\.bwc\\license.txt"), 
+    strcat(bwcAdd,"\\.bwc\\cache"), 
+    strcat(bwcAdd,"\\.bwc\\cache\\logs.txt"), 
+    strcat(bwcAdd,"\\.bwc\\cache\\profile.json"), 
+    strcat(bwcAdd,"\\.bwc\\cache\\settings.json"), 
+    strcat(bwcAdd,"\\.bwc\\cache\\settings.toml"), 
+    strcat(bwcAdd,"\\.bwc\\bin\\barca-cloud.exe"),
+    strcat(bwcAdd,"\\.bwc\\bin\\uninstall.exe"),
+    strcat(bwcAdd,"\\.bwc\\bin\\bwc-cli.exe"),
+    strcat(bwcAdd,"\\.bwc\\lib\\barca.cloud.api"),
+  };
+  // generating folder structure
+  for(int y = 0; y < 10; y++){
+    if(!CreateDirectory(pathsBWC[y].c_str(), NULL)) {
+      fprintf(stderr, "ERRO: %d\n", GetLastError());
+    }
+  };
+  // specifying paths to barca engine
   std::string paths[12] = {
     "C:\\Barca", 
     "C:\\Barca\\1.0", 
@@ -59,4 +86,9 @@ void mountDirEngine() {
     fputs("  Email: annibalhsouza@gmail.com    Author: Aníbal Souza  \n", file);
     fputs("----------------------------------------------------------\n\n\n", file);
   }
+}
+
+int main() {
+  mountDirEngine();
+  return 0;
 }
