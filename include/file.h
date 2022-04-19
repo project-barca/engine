@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
-#include "file.h"
 
 using std::cout; using std::ofstream;
 using std::endl; using std::string;
