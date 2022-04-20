@@ -1,5 +1,5 @@
-#ifndef ENCRYPTANDDECRYPT_H
-#define ENCRYPTANDDECRYPT_H
+#ifndef CYPHER_H
+#define CYPHER_H
 
 #include <bits/stdc++.h>
 
