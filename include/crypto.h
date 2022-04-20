@@ -3,15 +3,6 @@
 
 #include <bits/stdc++.h>
 
-void encryptAndDecryptXOR(char text[]) {
-  char xorKey = 'P';
-  int len = strlen(text);
-  for (int i = 0; i < len; i++) {
-    text[i] = text[i] ^ xorKey;
-    printf("%c",text[i]);
-  }
-};
-
 class Cypher {
   public:
     // VIGENERE CIPHER
@@ -52,8 +43,17 @@ class Cypher {
       }
       return orig_text;
     };
-    // VIGENERE CIPHER
-
+    // XOR CIPHER
+    string cipherTextXOR(char text[]) {
+      string cipher_text;
+      char xorKey = 'P';
+      int len = strlen(text);
+      for (int i = 0; i < len; i++) {
+        text[i] = text[i] ^ xorKey;
+        cipher_text.push_back(text[i]);
+      }
+      return cipher_text;
+    };
 };
 
 #endif
