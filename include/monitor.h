@@ -1,5 +1,5 @@
-#ifndef PROJ_H
-#define PROJ_H
+#ifndef MONITOR_H
+#define MONITOR_H
 #include <windows.h>
 #include <iostream>
 #include "directory.h"
@@ -9,7 +9,7 @@ class Monitor {
   public:
     // generate logs over server
     int logsServer(char* dir, int (*func)(std::string, std::string)) {
-      const char* newDir = R"(C:\\Barca\\1.0\\data)";
+      const char* newDir = R"(C:\\Barca\\1.0\\log)";
       Directory directory;
       std::cout << directory.setCurrentPath(newDir) << '\n';
       std::future<int> setServerLogs = std::async (
