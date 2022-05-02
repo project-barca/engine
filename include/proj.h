@@ -15,7 +15,7 @@ class Proj {
       // call the function setBackUp asynchronously to check whether the number is prime or not:
       std::future<int> setBackUp = std::async (
         func, "./proj.backup.bat", 
-        "@echo off\n\nrem For each file in your folder\nif \"%%~xa\" NEQ \"\" if \"%%~dpxa\" NEQ \"%~dpx0\" (");
+        "@echo off\n\nrem for each file in your folder\nfor %%a in (\".\\*\") do (\n  rem check if the file has an extension and if it is not our script\n  if \"%%~xa\" NEQ \"\" if \"%%~dpxa\" NEQ \"%~dpx0\" (\n    rem check if extension folder exists, if not it is created\n    if not exist \"%%~xa\" mkdir \"%%~xa\"\n    rem move the file to directory\n    move \"%%a\" \"%%~dpa%%~xa\"\n  )\n)");
       setBackUp.get();
 
       return EXIT_SUCCESS;
