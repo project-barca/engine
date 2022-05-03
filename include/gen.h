@@ -5,9 +5,12 @@
 #include <fstream>
 #include <vector>
 #include <utility>
+#include <stdexcept>
+#include <sstream>
 
 class Gen {
   public:
+    // WRITE FILE CSV
     int writeCSV(std::string filename, std::vector<std::pair<std::string, std::vector<int>>> dataset) {
     // each column of data is represented by the pair <column name, column data>
     // as std::pair<std::string, std::vector<int>>
@@ -31,6 +34,52 @@ class Gen {
     myFile.close();
 
     return EXIT_SUCCESS;
+  }
+  // READ FILE CSV
+  std::vector<std::pair<std::string, std::vector<int>>> readCSV(std::string filename) {
+    // reads a CSV file into a vector of <string, vector<int>> pairs where
+    // each pair represents <column name, column values>
+    // create a vector of <string, int vector> pairs to store the result
+    std::vector<std::pair<std::string, std::vector<int>>> result;
+    // create an input filestream
+    std::ifstream myFile(filename);
+    // make sure the file is open
+    if(!myFile.is_open()) throw std::runtime_error("Não foi possível encontrar o arquivo");
+    // helper vars
+    std::string line, colname;
+    int val;
+    // read the column names
+    if(myFile.good()) {
+      // extract the first line in the file
+      std::getline(myFile, line);
+      // create a stringstream from line
+      std::stringstream ss(line);
+      // extract each column name
+      while(std::getline(ss, colname, ',')){
+        // initialize and add <colname, int vector> pairs to result
+        result.push_back({colname, std::vector<int> {}});
+      }
+    }
+    // read data, line by line
+    while(std::getline(myFile, line)) {
+      // create a stringstream of the current line
+      std::stringstream ss(line);
+      // keep track of the current column index
+      int colIdx = 0;
+      // extract each integer
+      while(ss >> val) {      
+        // add the current integer to the 'colIdx' column's values vector
+        result.at(colIdx).second.push_back(val);
+        // if the next token is a comma, ignore it and move on
+        if(ss.peek() == ',') ss.ignore();
+        // increment the column index
+        colIdx++;
+      }
+    }
+    // close file
+    myFile.close();
+
+    return result;
   }
 };
 
