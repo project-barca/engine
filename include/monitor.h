@@ -49,7 +49,7 @@ class Monitor {
       Directory directory;
       std::cout << directory.setCurrentPath(newDir) << '\n';
       std::future<int> setSecurityLogs = std::async (
-        func, "./barca.backup.log",
+        func, "./barca.security.log",
         "{}");
       setBackUp.get();
 
