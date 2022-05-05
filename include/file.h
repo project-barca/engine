@@ -52,5 +52,45 @@ int rdFile(const std::string fileName) {
   else std::cout << "Não foi possível encontrar o arquivo: " << fileName;
   return EXIT_SUCCESS;
 }
+// encrypt a file
+int encryptFile(const std::string fileName) {
+  char ch;
+  fstream fps, fpt;
+  
+  fps.open(fileName, fstream::in);
+  if(!fps){
+    cout << "\nError ao tentar encontrar o arquivo";
+    return 0;
+  }
+  fpt.open("tmp.txt", fstream::out);
+  if(!fpt) {
+    cout << "\nOcorreu um erro ao tentar abrir o arquivo tmp";
+    return 0;
+  }
+  while(fps>>std::noskipws>>ch) {
+    ch = ch+100;
+    fpt<<ch;
+  }
+  fps.close();
+  fpt.close();
+  fps.open(fileName, fstream::out);
+  if(!fps) {
+    cout<<"\nErro ao tentar abrir o arquivo";
+    return 0;
+  }
+  fpt.open("tmp.txt", fstream::in);
+  if(!fpt) {
+    cout<<"\nError ao tentar abrir arquivo temporario";
+    return 0;
+  }
+  while(fpt >> std::noskipws >> ch)
+      fps<<ch;
+  fps.close();
+  fpt.close();
+  cout << "\n'" << fileName << "' Criptografado!";
+  cout << endl;
+
+  return EXIT_SUCCESS;
+}
 
 #endif
