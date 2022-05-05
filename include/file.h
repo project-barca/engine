@@ -25,4 +25,16 @@ int newFile(const std::string fileName, const std::string content) {
   return EXIT_SUCCESS;
 }
 
+int rmFile(const std::string fileName) {
+  const char* fil = fileName.c_str();
+  int fileDeleted = remove(fil);
+  if (fileDeleted == 0) {
+    cout << "Arquivo removido";
+  } else {
+    cerr << "Arquivo não encontrado";
+    return -1;
+  }
+  return 0;
+}
+
 #endif
