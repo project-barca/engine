@@ -56,17 +56,19 @@ int rdFile(const std::string fileName) {
 int encryptFile(const std::string fileName) {
   char ch;
   fstream fps, fpt;
-  
+  // open a file in read mode
   fps.open(fileName, fstream::in);
   if(!fps){
     cout << "\nError ao tentar encontrar o arquivo";
     return 0;
   }
+  // open a file in write mode
   fpt.open("tmp.txt", fstream::out);
   if(!fpt) {
     cout << "\nOcorreu um erro ao tentar abrir o arquivo tmp";
     return 0;
   }
+  // read file character by character
   while(fps>>std::noskipws>>ch) {
     ch = ch+100;
     fpt<<ch;
