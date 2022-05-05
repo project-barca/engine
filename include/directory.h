@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <iostream>
+#include <dirent.h>
 
 class Directory {
   public:
@@ -20,8 +21,9 @@ class Directory {
       return actualDir;
     };
     // SET NEW DIRECTORY
-    string setCurrentPath(char path) {
-      const char* newDir = R"(C:\\Barca)";
+    string setCurrentPath(std::string path) {
+      const char* newDir = R"(C:\\Barca\\1.0\\data)";
+
       if (!SetCurrentDirectory(newDir)) {
         std::cerr << "Error ao tentar definir diretório atual" << GetLastError();
       }
@@ -29,7 +31,23 @@ class Directory {
 
       return newDir;
     };
-
+    // LIST FOLDERS & FILES IN DIRECTORY
+    int listContent(std::string path) {
+      const char* newPath = path.c_str();
+      struct dirent *d;
+      DIR *dr;
+      dr = opendir(newPath);
+      if(dr!=NULL) {
+        for(d=readdir(dr); d!=NULL; d=readdir(dr)) {
+          cout<<d->d_name<<endl;
+        }
+        closedir(dr);
+      }
+      else
+        cout<<"\nError ao tentar exibir diretório";
+      cout<<endl;
+      return 0;
+    }
 };
 
 #endif
