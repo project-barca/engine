@@ -94,5 +94,31 @@ int encryptFile(const std::string fileName) {
 
   return EXIT_SUCCESS;
 }
+// decrypt a file with authentication
+int decryptFile(const std::string fileName, const std::string keyName) {
+  char ch;
+  fstream fps, fpt;
+
+  fps.open(fileName, fstream::out);
+  if(!fps) {
+    cout<<"\nError ao tentar abrir arquivo";
+    return 0;
+  }
+  fpt.open(keyName, fstream::in);
+  if(!fpt) {
+    cout<<"\nOcorreu algum erro ao tentar abrir o arquivo chave de descriptografia";
+    return 0;
+  }
+  while(fpt>>std::noskipws>>ch) {
+    ch = ch-100;
+    fps<<ch;
+  }
+  fps.close();
+  fpt.close();
+  cout<<"\n'"<< fileName <<"' Descriptografado";
+  cout<<endl;
+
+  return EXIT_SUCCESS;
+}
 
 #endif
