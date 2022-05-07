@@ -3,13 +3,51 @@
 #include <windows.h>
 #include <string>
 #include <fstream>
+#include <iostream>
 #include <vector>
 #include <utility>
 #include <stdexcept>
-#include <sstream>
+#include <sstream> 
 
 class Gen {
   public:
+    // WRITE FILE JSON
+    int writeJSON() {
+
+      // Json::Value root;
+
+      // root["name"] = Json::Value("ahsouza");
+      // root["age"] = Json::Value(28);
+      // root["sex"] = Json::Value("man");
+
+      // Json::Value friends;
+
+      // friends["friend_name"] = Json::Value("will");
+      // friends["friend_age"] = Json::Value(27);
+      // friends["friend_sex"] = Json::Value("man");
+
+      // root["friends"] = Json::Value(friends);
+
+      // root["hobyy"].append("video-game");
+      // root["hobyy"].append("correr");
+      // root["hobyy"].append("jiu-jitsu");
+
+      // cout << "Escrever arquivo JSON: " << endl;
+      // Json:Styled sw;
+      // cout << sw.write(root) << endl << endl;
+
+      // ofstream os;
+      // os.open("./barca.json", std::ios::out | std::ios::app);
+      // if (!os.is_open())
+      //   cout << "Não pode encontrar ou criar o arquivo" << endl;
+      // os << sw.write(root);
+      // os.close()
+
+
+
+      return EXIT_SUCCESS;
+    }
+
     // WRITE FILE CSV
     int writeCSV(std::string filename, std::vector<std::pair<std::string, std::vector<int>>> dataset) {
     // each column of data is represented by the pair <column name, column data>
@@ -81,6 +119,7 @@ class Gen {
 
     return result;
   }
+  // READ FILE JSON
 };
 
 #endif
