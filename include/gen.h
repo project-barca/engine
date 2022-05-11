@@ -10,6 +10,8 @@
 #include <sstream> 
 #include "json.hpp"
 
+using json = nlohmann::json;
+
 class Gen {
   public:
     // WRITE FILE JSON
